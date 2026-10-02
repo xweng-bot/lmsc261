@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<body>
+    <canvas width="600" height="600" id="canvas" style="width: 600px; height: 600px;"></canvas>
+</body>
+
+<script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    const w = canvas.width, h = canvas.height;
+
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width *= dpr, canvas.height *= dpr;
+    ctx.scale(dpr, dpr);
+
+    ctx.fillStyle = "#129876"
+    ctx.fillRect(0, 0, w, h)
+  
+    for(let c = 0; c < 256; c++){// c = c+1
+          let xPos = Math.random() * w;
+            let yPos = Math.random() * h;
+            let radius = Math.random() * 10;
+
+            ctx.beginPath()
+            ctx.arc(xPos, 
+                    yPos,
+                    radius,
+                    Math.random() * 12, // = 3 o'clock
+                    Math.PI * 1,
+                    true
+            )
+        let isAbove = yPos < h/2;
+        if(isAbove){
+
+            ctx.fillStyle = "pink"
+
+        } else {
+
+            ctx.fillStyle = "green"
+        };
+        ctx.fill();
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = Math.random() * 10;
+        ctx.stroke();
+    
+
+    } 
+
+
+
+</script>
