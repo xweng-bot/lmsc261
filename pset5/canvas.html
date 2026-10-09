@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<body>
+    <canvas width="600" height="600" id="canvas" style="width: 600px; height: 600px;"></canvas>
+</body>
+
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+const w = canvas.width, h = canvas.height;
+
+const dpr = window.devicePixelRatio || 1;
+canvas.width *= dpr, canvas.height *= dpr;
+ctx.scale(dpr, dpr);
+
+// paint background color
+ctx.fillStyle = "lightgreen";
+ctx.fillRect(0, 0, w, h);
+
+
+// circleA
+const circleA = [w * 0.5, h * 0.5];
+const radiusA = w * 0.3;
+
+ctx.beginPath();
+ctx.arc(
+    circleA [0],
+    circleA [1],
+    radiusA,
+    Math.PI * 1.75,
+    Math.PI * 1.25,
+    false
+);
+ctx.stroke();
+
+
+
+
+// circleB
+const circleB = [w * 0.5, h * 0.75];
+const radiusB = w * 0.4;
+
+ctx.beginPath();
+ctx.arc(
+    circleB [0],
+    circleB [1],
+    radiusB,
+    Math.PI * 1.45,
+    Math.PI * 1.55,
+    false
+);
+
+ctx.stroke();
+
+// line connection
+    // circleA L/R position
+    const leftA = [
+        circleA[0] + radiusA * Math.cos(Math.PI * 1.25),
+        circleA[1] + radiusA * Math.sin(Math.PI * 1.25)
+    ];
+
+    const rightA = [
+        circleA[0] + radiusA * Math.cos(Math.PI * 1.75),
+        circleA[1] + radiusA * Math.sin(Math.PI * 1.75)
+    ];
+
+    // circleB L/R position
+    const leftB = [
+    circleB[0] + radiusB * Math.cos(Math.PI * 1.45),
+    circleB[1] + radiusB * Math.sin(Math.PI * 1.45)
+    ];
+
+    const rightB = [
+    circleB[0] + radiusB * Math.cos(Math.PI * 1.55),
+    circleB[1] + radiusB * Math.sin(Math.PI * 1.55)
+    ];
+
+    // left line
+    ctx.beginPath();
+    ctx.moveTo(leftA[0], leftA[1]);
+    ctx.lineTo(leftB[0], leftB[1]);
+    ctx.stroke();
+
+    // right line
+    ctx.beginPath();
+    ctx.moveTo(rightA[0], rightA[1]);
+    ctx.lineTo(rightB[0], rightB[1]);
+    ctx.stroke();
+    ctx.stroke();
+
+// eyes
+const eyeA = [w * 0.36, h * 0.52];
+const eyeB = [w * 0.64, h * 0.52];
+const eyeRadius = w * 0.02;
+
+    // left eye
+    ctx.beginPath();
+    ctx.arc(
+        eyeA[0],
+        eyeA[1],
+        eyeRadius,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fillStyle = "black";
+    ctx.fill();
+
+    // right eye
+    ctx.beginPath();
+    ctx.arc(
+        eyeB[0],
+        eyeB[1],
+        eyeRadius,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+// mouth
+    const mouth = [w * 0.5, h * 0.6];
+    const mouthRadius = w * 0.01;
+    ctx.beginPath();
+    ctx.arc(
+        mouth[0],
+        mouth[1],
+        mouthRadius,
+        0,
+        Math.PI * 2,
+        false
+    );
+
+    ctx.fill();
+
+    const mouthLeft = [w * 0.482, h * 0.605];
+    const mouthLeftRadius = w * 0.02;
+    ctx.beginPath();
+    ctx.arc(
+        mouthLeft[0],
+        mouthLeft[1],
+        mouthLeftRadius,
+        0,
+        Math.PI,
+        false
+    );
+     ctx.stroke();
+    
+    const mouthRight = [w * 0.518, h * 0.605];
+    const mouthRightRadius = w * 0.02;
+    ctx.beginPath();
+    ctx.arc(
+        mouthRight[0],
+        mouthRight[1],
+        mouthRightRadius,
+        0,
+        Math.PI,
+        false
+    );
+     ctx.stroke();
+</script>
+
+
