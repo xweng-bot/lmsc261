@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<body>
+    <canvas width="600" height="600" id="canvas" style="width: 600px; height: 600px;"></canvas>
+</body>
+
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+const w = canvas.width, h = canvas.height;
+
+const dpr = window.devicePixelRatio || 1;
+canvas.width *= dpr, canvas.height *= dpr;
+ctx.scale(dpr, dpr);
+
+//paint background color
+ctx.fillStyle = "red";
+ctx.fillRect(0, 0, w, h);
+
+//JAZZ CAT
+
+const cx = w * 0.5;
+const cy = h * 0.5;
+
+function drawCircle(x, y, radius) {
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, Math.PI * 2);
+    ctx.fill();
+}
+
+
+function drawCat(scale){
+    
+    //circleA
+    const circleA = [
+    cx + (w * 0.5 - cx) * scale,
+    cy + (h * 0.5 - cy) * scale,
+    ];
+    const radiusA = w * 0.3 * scale;
+
+    ctx.beginPath();
+    ctx.arc(
+        circleA [0],
+        circleA [1],
+        radiusA,
+        Math.PI * 1.75,
+        Math.PI * 1.25,
+        false
+    );
+
+
+    // circleB
+    const circleB = [ 
+        cx + (w * 0.5 - cx) * scale,
+        cy + (h * 0.75 - cy) * scale,
+    ];
+    const radiusB = w * 0.4 * scale;
+
+    ctx.arc(
+        circleB [0],
+        circleB [1],
+        radiusB,
+        Math.PI * 1.45,
+        Math.PI * 1.55,
+        false
+    );
+
+
+    //line connection
+        //circleA L/R position
+        const leftA = [
+            circleA[0] + radiusA * Math.cos(Math.PI * 1.25),
+            circleA[1] + radiusA * Math.sin(Math.PI * 1.25)
+        ];
+
+        const rightA = [
+            circleA[0] + radiusA * Math.cos(Math.PI * 1.75),
+            circleA[1] + radiusA * Math.sin(Math.PI * 1.75)
+        ];
+
+        //circleB L/R position
+        const leftB = [
+        circleB[0] + radiusB * Math.cos(Math.PI * 1.45),
+        circleB[1] + radiusB * Math.sin(Math.PI * 1.45)
+        ];
+
+        const rightB = [
+        circleB[0] + radiusB * Math.cos(Math.PI * 1.55),
+        circleB[1] + radiusB * Math.sin(Math.PI * 1.55)
+        ];
+
+        //left line
+        ctx.moveTo(leftA[0], leftA[1]);
+        ctx.lineTo(leftB[0], leftB[1]);
+
+        //right line
+        ctx.moveTo(rightA[0], rightA[1]);
+        ctx.lineTo(rightB[0], rightB[1]);
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 8 * scale;
+        ctx.stroke();
+        ctx.closePath();
+        ctx.fillStyle = "black";
+        ctx.fill();
+
+    //eyes
+        const eyeA = [
+            cx + (w * 0.36 - cx) * scale,
+            cy + (h * 0.52 - cy) * scale,
+        ];
+        const eyeB = [
+            cx + (w * 0.64 - cx) * scale,
+            cy + (h * 0.52 - cy) * scale,
+        ];
+        const eyeRadius = w * 0.02 * scale;
+
+        //left eye
+        ctx.fillStyle = "white";
+        drawCircle(eyeA[0], eyeA[1], eyeRadius);
+
+        //right eye
+        ctx.fillStyle = "white";
+        drawCircle(eyeB[0], eyeB[1], eyeRadius);
+
+        //mouth
+        const nose = [
+            cx + (w * 0.5 - cx) * scale,
+            cy + (h * 0.6 - cy) * scale,
+        ];
+        const noseRadius = w * 0.01 * scale;
+
+        ctx.fillStyle = "red";
+        drawCircle(nose[0], nose[1], noseRadius);
+
+        const mouthLeft = [
+            cx + (w * 0.482 - cx) * scale,
+            cy + (h * 0.605 - cy) * scale,
+        ];
+        const mouthLeftRadius = w * 0.02 * scale;
+        ctx.beginPath();
+        ctx.arc(
+            mouthLeft[0],
+            mouthLeft[1],
+            mouthLeftRadius,
+            0,
+            Math.PI,
+            false
+        );
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 3 * scale;
+        ctx.stroke();
+
+        const mouthRight = [
+            cx + (w * 0.518 - cx) * scale,
+            cy + (h * 0.605 - cy) * scale,
+        ];
+        const mouthRightRadius = w * 0.02 * scale;
+
+        ctx.beginPath();
+        ctx.arc(
+            mouthRight[0],
+            mouthRight[1],
+            mouthRightRadius,
+            0,
+            Math.PI,
+            false
+        );
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 3 * scale;
+        ctx.stroke();
+
+        //whiskers
+        for (let i = 0; i < 3; i++) {
+            ctx.beginPath();
+            ctx.moveTo(
+                cx - 60 * scale,
+                cy + (65 + i * 10) * scale
+            );
+
+            ctx.lineTo(
+                cx - 150 * scale,
+                cy + (50 + i * 15) * scale
+            );
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 2 * scale;
+        ctx.stroke();
+        }
+
+        for (let i = 0; i < 3; i++) {
+            ctx.beginPath();
+            ctx.moveTo(
+                cx + 60 * scale,
+                cy + (65 + i * 10) * scale
+            );
+
+            ctx.lineTo(
+                cx + 150 * scale,
+                cy + (50 + i * 15) * scale
+            );
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 2 * scale;
+        ctx.stroke();
+        }
+
+}
+
+
+function drawGlasses(scale){
+    //SUNGLASSES
+        const eyeA = [
+            cx + (w * 0.36 - cx) * scale,
+            cy + (h * 0.52 - cy) * scale,
+        ];
+        const eyeB = [
+            cx + (w * 0.64 - cx) * scale,
+            cy + (h * 0.52 - cy) * scale,
+        ];
+        const eyeRadius = w * 0.02 * scale;
+        const glassWidth = 300 * scale;
+        const glassHeight = 80 * scale;
+
+        //lens
+
+        ctx.beginPath();
+        ctx.rect(
+            eyeA[0] - 65 * scale,
+            eyeA[1] - 50 * scale,
+            glassWidth,
+            glassHeight,
+        );
+        ctx.fillStyle = colors[colorIndex];
+        ctx.fill();
+
+
+}
+//animation
+
+    //color of lens
+    let colorIndex = 0;
+    let frame = 0;
+    const colors = ["white", "blue", "green", "yellow", "purple", "pink"];
+    let isToggled = false;
+    //scaling
+    let scale = 1;
+    let velScale = 0.002;
+
+
+function draw() {
+
+    //background
+    ctx.fillStyle = "red";
+    ctx.fillRect(0, 0, w, h);
+
+    drawCat(scale);
+
+    if (isToggled) {
+        drawGlasses(scale);
+    }
+
+}
+
+function tick() {
+
+    frame++;
+
+    if (frame >= 20) {
+        colorIndex++;
+
+        if (colorIndex >= colors.length) {
+            colorIndex = 0;
+        }
+
+        frame = 0;
+
+    }
+
+    scale += velScale;
+
+    if (scale >= 1.1 || scale <= 0.9) {
+
+        velScale *= -1;
+
+    }
+
+    draw();
+
+    requestAnimationFrame(tick);
+}
+
+
+
+
+draw();
+canvas.addEventListener("click", () => {
+    isToggled = !isToggled;
+    draw();
+});
+
+tick();
+
+</script>
+
+
